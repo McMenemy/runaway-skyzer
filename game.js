@@ -21,15 +21,15 @@ var heroImage = new Image();
 heroImage.onload = function () {
 	heroReady = true;
 };
-heroImage.src = "images/hero.png";
+heroImage.src = "images/mouseDown1.png";
 
-// Monster image
-var monsterReady = false;
-var monsterImage = new Image();
-monsterImage.onload = function () {
-	monsterReady = true;
+// Cat image
+var catReady = false;
+var catImage = new Image();
+catImage.onload = function () {
+	catReady = true;
 };
-monsterImage.src = "images/monster.png";
+catImage.src = "images/catLeft1.png";
 
 // Cheese1 image
 var cheese1Ready = false;
@@ -55,12 +55,7 @@ var hero = {
   y: canvas.height / 2
 };
 
-var monster = {
-  x: 0,
-  y: 0,
-  xSpeed: 0,
-  ySpeed: 0
-};
+var cats = [];
 
 var cheese1 = {
   eaten: false,
@@ -76,6 +71,8 @@ var cheese2 = {
 
 var cheeseEaten = 0;
 
+var gameOver = false;
+
 // Handle keyboard controls
 var keysDown = {};
 
@@ -87,16 +84,33 @@ addEventListener('keyup', function(e) {
   delete keysDown[e.keyCode];
 }, false);
 
-// Reset the game when the player catches a monster
+// Reset the game when the player catches a cat
 var reset = function () {
 
-  // Throw the monster somewhere on the screen randomly
-  monster.x = 32 + (Math.random() * (canvas.width - 96));
-  monster.y = 32 + (Math.random() * (canvas.height - 96));
+  // Throw the cat somewhere on the screen randomly
+  if (cheeseEaten > 0){
 
-  // Give monster random speed
-  monster.xSpeed = Math.random() * 512 - 256;
-  monster.ySpeed = Math.random() * 512 - 256;
+    var cat = {
+      // Give cat random speed
+      xSpeed: Math.random() * 512 - 256,
+      ySpeed: Math.random() * 512 - 256,
+
+      x: 32 + (Math.random() * (canvas.width - 96)),
+      y: 32 + (Math.random() * (canvas.height - 96)),
+
+    };
+
+    // make cat start from bushes
+
+    if (cat.xSpeed > 0) {
+      cat.x = -32;
+    } else if (cat.xSpeed < 0) {
+      cat.x = canvas.width;
+    }
+
+    cats.push(cat);
+
+  }
 
   //Throw new cheeses on the screen randomly
   cheese1.x = 32 + (Math.random() * (canvas.width - 96));
@@ -130,27 +144,37 @@ var update = function (modifier) {
   hero.x = Math.max(32, hero.x);
   hero.x = Math.min(hero.x, (canvas.width - 64));
 
-  // Move monster
-  monster.x += monster.xSpeed * modifier;
-  monster.y += monster.ySpeed * modifier;
+  // Move cats
+  cats.forEach(function(cat){
+
+    cat.x += cat.xSpeed * modifier;
+    cat.y += cat.ySpeed * modifier;
 
 
-  // Keep monster in bounds
-  monster.y = Math.max(32, monster.y);
-  monster.y = Math.min(monster.y, (canvas.height - 64));
+    // Bounce cat off walls
+    if (cat.x <= 32){
+      cat.xSpeed = Math.abs(cat.xSpeed);
+    } else if (cat.x >= canvas.width - 64){
+      cat.xSpeed = 0 - Math.abs(cat.xSpeed);
+    }
 
-  monster.x = Math.max(32, monster.x);
-  monster.x = Math.min(monster.x, (canvas.width - 64));
+    if (cat.y <= 32){
+      cat.ySpeed = Math.abs(cat.ySpeed);
+    } else if (cat.y >= canvas.height - 64){
+      cat.ySpeed = 0 - Math.abs(cat.ySpeed);
+    }
 
+    // Caught?
+    if (
+      hero.x <= (cat.x + 32)
+      && cat.x <= (hero.x + 32)
+      && hero.y <= (cat.y + 32)
+      && cat.y <= (hero.y + 32)
+    ) {
+      gameOver = true;
+    }
 
-  // Bounce monster off walls
-  if (monster.x <= 32 || monster.x >= canvas.width - 64){
-    monster.xSpeed *= -1;
-  }
-
-  if (monster.y <= 32 || monster.y >= canvas.height - 64){
-    monster.ySpeed *= -1;
-  }
+  });
 
 
 
@@ -194,8 +218,10 @@ var render = function() {
      ctx.drawImage(heroImage, hero.x, hero.y);
    }
 
-   if (monsterReady) {
-     ctx.drawImage(monsterImage, monster.x, monster.y);
+   if (catReady) {
+     cats.forEach(function(cat){
+       ctx.drawImage(catImage, cat.x, cat.y);
+     });
    }
 
    if (cheese1Ready) {
@@ -225,8 +251,10 @@ var main = function () {
 
   then = now;
 
-  //Request to do this again ASAP
-  requestAnimationFrame(main);
+  //Request to do this again ASAP if you aren't caught
+  if (!gameOver) {
+    requestAnimationFrame(main);
+  }
 };
 
 // Cross-browser support for requestAnimationFrame
