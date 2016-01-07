@@ -15,13 +15,49 @@ bgImage.onload = function () {
 };
 bgImage.src = "images/background.png";
 
-// Hero image
-var heroReady = false;
-var heroImage = new Image();
-heroImage.onload = function () {
-	heroReady = true;
+// Mouse images
+var mouseReady1 = false;
+var mouseImage1 = new Image();
+mouseImage1.onload = function () {
+	mouseReady1 = true;
 };
-heroImage.src = "images/mouseDown1.png";
+mouseImage1.src = "images/mouse1.png";
+
+var mouseReady2 = false;
+var mouseImage2 = new Image();
+mouseImage2.onload = function () {
+	mouseReady2 = true;
+};
+mouseImage2.src = "images/mouse2.png";
+
+var mouseReady3 = false;
+var mouseImage3 = new Image();
+mouseImage3.onload = function () {
+	mouseReady3 = true;
+};
+mouseImage3.src = "images/mouse3.png";
+
+//which image to show
+var mouseImage = function(){
+  //mouse not moving
+  var image = mouseImage1;
+
+  //mouse moving
+  if (37 in keysDown
+    || 38 in keysDown
+    || 39 in keysDown
+    || 40 in keysDown) {
+      if ( (mouse.x + mouse.y) % 100 < 50 ) {
+        image = mouseImage2;
+      } else {
+        image = mouseImage3;
+      }
+  }
+
+  return image;
+}
+
+
 
 // Cat image
 var catReady = false;
@@ -49,7 +85,7 @@ cheese2Image.src = "images/cheese2.png";
 
 
 // Game Objects
-var hero = {
+var mouse = {
   speed: 256, //movement in pixels per second
   x: canvas.width / 2,
   y: canvas.height / 2
@@ -125,24 +161,24 @@ var reset = function () {
 // Update game objects
 var update = function (modifier) {
   if (38 in keysDown) { // Player holding up
-    hero.y -= hero.speed * modifier;
+    mouse.y -= mouse.speed * modifier;
   }
   if (40 in keysDown) { // Player holding down
-    hero.y += hero.speed * modifier;
+    mouse.y += mouse.speed * modifier;
   }
   if (37 in keysDown) { // Player holding left
-    hero.x -= hero.speed * modifier;
+    mouse.x -= mouse.speed * modifier;
   }
   if (39 in keysDown) { // Player holding right
-    hero.x += hero.speed * modifier;
+    mouse.x += mouse.speed * modifier;
   }
 
-  // Keep hero in bounds
-  hero.y = Math.max(32, hero.y);
-  hero.y = Math.min(hero.y, (canvas.height - 64));
+  // Keep mouse in bounds
+  mouse.y = Math.max(32, mouse.y);
+  mouse.y = Math.min(mouse.y, (canvas.height - 60));
 
-  hero.x = Math.max(32, hero.x);
-  hero.x = Math.min(hero.x, (canvas.width - 64));
+  mouse.x = Math.max(31, mouse.x);
+  mouse.x = Math.min(mouse.x, (canvas.width - 59));
 
   // Move cats
   cats.forEach(function(cat){
@@ -166,10 +202,10 @@ var update = function (modifier) {
 
     // Caught?
     if (
-      hero.x <= (cat.x + 32)
-      && cat.x <= (hero.x + 32)
-      && hero.y <= (cat.y + 32)
-      && cat.y <= (hero.y + 32)
+      mouse.x <= (cat.x + 32)
+      && cat.x <= (mouse.x + 32)
+      && mouse.y <= (cat.y + 32)
+      && cat.y <= (mouse.y + 32)
     ) {
       gameOver = true;
     }
@@ -180,10 +216,10 @@ var update = function (modifier) {
 
   // Eat Cheeses?
   if (
-    hero.x <= (cheese1.x + 32)
-    && cheese1.x <= (hero.x + 32)
-    && hero.y <= (cheese1.y + 32)
-    && cheese1.y <= (hero.y + 32)
+    mouse.x <= (cheese1.x + 32)
+    && cheese1.x <= (mouse.x + 32)
+    && mouse.y <= (cheese1.y + 32)
+    && cheese1.y <= (mouse.y + 32)
   ) {
     cheese1.eaten = true;
     cheese1.x = -32;
@@ -192,10 +228,10 @@ var update = function (modifier) {
   }
 
   if (
-    hero.x <= (cheese2.x + 32)
-    && cheese2.x <= (hero.x + 32)
-    && hero.y <= (cheese2.y + 32)
-    && cheese2.y <= (hero.y + 32)
+    mouse.x <= (cheese2.x + 32)
+    && cheese2.x <= (mouse.x + 32)
+    && mouse.y <= (cheese2.y + 32)
+    && cheese2.y <= (mouse.y + 32)
   ) {
     cheese2.eaten = true;
     cheese2.x = -32;
@@ -211,11 +247,22 @@ var update = function (modifier) {
 
 // Draw everything
 var render = function() {
+
+  //Background
   if (bgReady) {
     ctx.drawImage(bgImage, 0, 0);
   }
-   if (heroReady) {
-     ctx.drawImage(heroImage, hero.x, hero.y);
+
+  // Score
+  ctx.fillStyle = "rgb(250, 250, 250)";
+  ctx.font = "24px Helvetica";
+  ctx.textAlign = "left";
+  ctx.textBaseline = "top";
+  ctx.fillText("Cheese Eaten: " + cheeseEaten, 32, 32);
+
+  //Objects
+   if (mouseReady1 && mouseReady2 && mouseReady3) {
+     ctx.drawImage(mouseImage(), mouse.x, mouse.y);
    }
 
    if (catReady) {
@@ -232,13 +279,6 @@ var render = function() {
      ctx.drawImage(cheese2Image, cheese2.x, cheese2.y);
    }
 
-   // Score
-
-   ctx.fillStyle = "rgb(250, 250, 250)";
-   ctx.font = "24px Helvetica";
-   ctx.textAlign = "left";
-   ctx.textBaseline = "top";
-   ctx.fillText("Cheese Eaten: " + cheeseEaten, 32, 32);
 };
 
 // The main game loop
