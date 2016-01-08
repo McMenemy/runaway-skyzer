@@ -334,6 +334,18 @@ var main = function () {
   //Request to do this again ASAP if you aren't caught
   if (!gameOver) {
     requestAnimationFrame(main);
+  } else {
+    // Game Over Message
+    ctx.fillStyle = "rgb(250, 250, 250)";
+    ctx.font = "48px Helvetica";
+    ctx.textAlign = "left";
+    ctx.textBaseline = "top";
+    ctx.fillText("GAME OVER!!!     " + cheeseEaten, 32, 250);
+
+    // replay in 3 seconds
+    setTimeout(function(){
+      document.location.reload();
+    }, 3000 )
   }
 };
 
@@ -345,6 +357,6 @@ requestAnimationFrame = w.requestAnimationFrame
   || w.mozRequestAnimationFrame;
 
 // Let's play this game!
-var then = Date.now()
+var then = Date.now();
 reset();
 main();
