@@ -47,7 +47,7 @@ var mouseImage = function(){
     || 38 in keysDown
     || 39 in keysDown
     || 40 in keysDown) {
-      if ( (mouse.x + mouse.y) % 100 < 50 ) {
+      if ( (mouse.x + mouse.y) % 150 < 75 ) {
         image = mouseImage2;
       } else {
         image = mouseImage3;
@@ -59,13 +59,53 @@ var mouseImage = function(){
 
 
 
-// Cat image
-var catReady = false;
-var catImage = new Image();
-catImage.onload = function () {
-	catReady = true;
+// Cat images
+var catLeft1Ready = false;
+var catLeft1 = new Image();
+catLeft1.onload = function () {
+	catLeft1Ready = true;
 };
-catImage.src = "images/catLeft1.png";
+catLeft1.src = "images/catLeft1.png";
+
+var catLeft2Ready = false;
+var catLeft2 = new Image();
+catLeft2.onload = function () {
+	catLeft2Ready = true;
+};
+catLeft2.src = "images/catLeft2.png";
+
+var catRight1Ready = false;
+var catRight1 = new Image();
+catRight1.onload = function () {
+	catRight1Ready = true;
+};
+catRight1.src = "images/catRight1.png";
+
+var catRight2Ready = false;
+var catRight2 = new Image();
+catRight2.onload = function () {
+	catRight2Ready = true;
+};
+catRight2.src = "images/catRight2.png";
+
+// Which cat to show
+var catImage = function(cat){
+  var image;
+  if (cat.xSpeed <= 0){ //Cat moving to the left
+    if ( (cat.x + cat.y) % 100 < 50 ) {
+      image = catLeft1;
+    } else {
+      image = catLeft2;
+    }
+  } else { //Cat moving to the right
+    if ( (cat.x + cat.y) % 100 < 50 ) {
+      image = catRight1;
+    } else {
+      image = catRight2;
+    }
+  }
+  return image;
+}
 
 // Cheese1 image
 var cheese1Ready = false;
@@ -202,10 +242,10 @@ var update = function (modifier) {
 
     // Caught?
     if (
-      mouse.x <= (cat.x + 32)
-      && cat.x <= (mouse.x + 32)
-      && mouse.y <= (cat.y + 32)
-      && cat.y <= (mouse.y + 32)
+      mouse.x <= (cat.x + 28)
+      && cat.x <= (mouse.x + 28)
+      && mouse.y <= (cat.y + 23)
+      && cat.y <= (mouse.y + 23)
     ) {
       gameOver = true;
     }
@@ -265,9 +305,9 @@ var render = function() {
      ctx.drawImage(mouseImage(), mouse.x, mouse.y);
    }
 
-   if (catReady) {
+   if (catLeft1Ready && catLeft2Ready && catRight1Ready && catRight2Ready) {
      cats.forEach(function(cat){
-       ctx.drawImage(catImage, cat.x, cat.y);
+       ctx.drawImage(catImage(cat), cat.x, cat.y);
      });
    }
 
