@@ -242,8 +242,8 @@ var update = function (modifier) {
 
     // Caught?
     if (
-      mouse.x <= (cat.x + 28)
-      && cat.x <= (mouse.x + 28)
+      mouse.x <= (cat.x + 27)
+      && cat.x <= (mouse.x + 27)
       && mouse.y <= (cat.y + 23)
       && cat.y <= (mouse.y + 23)
     ) {
