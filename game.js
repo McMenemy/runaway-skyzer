@@ -295,10 +295,12 @@ var render = function() {
 
   // Score
   ctx.fillStyle = "rgb(250, 250, 250)";
-  ctx.font = "24px Helvetica";
+  ctx.font = "24px Mouse Memoirs";
   ctx.textAlign = "left";
   ctx.textBaseline = "top";
-  ctx.fillText("Cheese Eaten: " + cheeseEaten, 32, 32);
+  // Add Kerning
+  var ctext = ("Cheese Eaten: " + cheeseEaten).split("").join(String.fromCharCode(8202));
+  ctx.fillText(ctext, 32, 32);
 
   //Objects
    if (mouseReady1 && mouseReady2 && mouseReady3) {
@@ -337,10 +339,10 @@ var main = function () {
   } else {
     // Game Over Message
     ctx.fillStyle = "rgb(250, 250, 250)";
-    ctx.font = "48px Helvetica";
-    ctx.textAlign = "left";
+    ctx.font = "48px Mouse Memoirs";
+    ctx.textAlign = "center";
     ctx.textBaseline = "top";
-    ctx.fillText("GAME OVER!!!     " + cheeseEaten, 32, 250);
+    ctx.fillText("GAME OVER!!!     " + cheeseEaten, canvas.width / 2, 250);
 
     // replay in 3 seconds
     setTimeout(function(){
