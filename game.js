@@ -168,8 +168,8 @@ var reset = function () {
 
     var cat = {
       // Give cat random speed
-      xSpeed: Math.random() * 512 - 256,
-      ySpeed: Math.random() * 512 - 256,
+      xSpeed: Math.random() * 480 - 240,
+      ySpeed: Math.random() * 480 - 240,
 
       x: 32 + (Math.random() * (canvas.width - 96)),
       y: 32 + (Math.random() * (canvas.height - 96)),
