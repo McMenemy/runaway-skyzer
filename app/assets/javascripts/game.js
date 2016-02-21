@@ -68,12 +68,12 @@ totoro.onload = function () {
 };
 totoro.src = "totoro.png";
 
-var totoroReady = false;
-var totoro = new Image();
-totoro.onload = function () {
-	totoroReady = true;
+var totorofatReady = false;
+var totorofat = new Image();
+totorofat.onload = function () {
+	totorofatReady = true;
 };
-totoro.src = "totoro.png";
+totorofat.src = "totorofat.png";
 
 var totoroReady = false;
 var totoro = new Image();
@@ -82,12 +82,12 @@ totoro.onload = function () {
 };
 totoro.src = "totoro.png";
 
-var totoroReady = false;
-var totoro = new Image();
-totoro.onload = function () {
-	totoroReady = true;
+var totorofatReady = false;
+var totorofat = new Image();
+totorofat.onload = function () {
+	totorofatReady = true;
 };
-totoro.src = "totoro.png";
+totorofat.src = "totorofat.png";
 
 // Which cat to show
 var catImage = function(cat){
@@ -96,13 +96,13 @@ var catImage = function(cat){
     if ( (cat.x + cat.y) % 100 < 50 ) {
       image = totoro;
     } else {
-      image = totoro;
+      image = totorofat;
     }
   } else { //Cat moving to the right
     if ( (cat.x + cat.y) % 100 < 50 ) {
       image = totoro;
     } else {
-      image = totoro;
+      image = totorofat;
     }
   }
   return image;
