@@ -334,7 +334,7 @@ var render = function() {
      ctx.drawImage(mouseImage(), mouse.x, mouse.y);
    }
 
-   if (totoroReady && totoroReady && totoroReady && totoroReady) {
+   if (totoroReady && totorofatReady && totorofatReady && totoroReady) {
      cats.forEach(function(cat){
        ctx.drawImage(catImage(cat), cat.x, cat.y);
      });
