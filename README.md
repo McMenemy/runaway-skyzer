@@ -1,5 +1,3 @@
-Eat as much cheese as you can!
+# Runaway-Skyzer
 
-Use the keyboard arrows to move the mouse.
-
-Avoid the cats!
+A reskin of the JS game mousecat (https://github.com/tevydavid/mouseCat).
