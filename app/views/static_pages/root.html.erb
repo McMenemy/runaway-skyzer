@@ -2,15 +2,14 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
-    <link href='https://fonts.googleapis.com/css?family=Mouse+Memoirs' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
   </head>
   <script type="text/javascript">
     window.mouseCat = {};
     window.mouseCat.highscores = [];
   </script>
   <body id='background'>
-    <h1>Mouse Cat</h1>
+    <h1>Runaway Skyzer</h1>
     <div class="container">
       <div class='game-container' >
         <canvas id="canvas">
@@ -20,7 +19,7 @@
       <div class="stats-container">
         <h2>All Time Stats:</h2>
         <p><%= "Games Played: " + @games.to_s %></p>
-        <p><%= "Cheeses Eaten: " + @cheeses.to_s %></p>
+        <p><%= "Apples Eaten: " + @cheeses.to_s %></p>
         <h2>All Time High Score:</h2>
         <p><%= @alltime[:username] + ": " + @alltime[:score].to_s %></p>
         <h2>Today's High Scores:</h2>
@@ -31,9 +30,16 @@
         <p><%= (idx + 1).to_s + ") " + highscore[:username] + ": " + highscore[:score].to_s %></p>
         <% end %>
       </div>
+
+      <script>
+        window.alert(" Happy Birthday Siski!!!! Hope this adds a few laughs to a great day =): You are Skyzer - a needy, cuddly, cute doggy who loves to nibble Apples. And, today is a dream come true because you have managed to escape from the pesky humans you live with and run into a nearby apple orchord. However, you better eat the apples fast because the humans are hot on your tracks and they have recruited totoros to help them catch you! Use the arrow keys to move and don't let the totoros touch you!");
+      </script>
+
+
       <div id="submitmodal" hidden>
         <form class="submitform" id='submitform' action= "<%= scores_url %>" method="post">
           <h2 id='score'></h2>
+          <p> You got caught =( atleast you love your pesky human friends =)</p>
           <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
           <input type="hidden" name="score[score]" id='scoreInput'>
           <input type="text" id='submitname' name="score[username]"

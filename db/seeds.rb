@@ -9,3 +9,4 @@
 
 Record.create(name: 'games')
 Record.create(name: 'cheeses')
+Score.create(username: 'initialize', score: 0) 

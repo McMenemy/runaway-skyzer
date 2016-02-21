@@ -6,7 +6,7 @@ class ScoresController < ApplicationController
     @score = Score.new(score_params)
     @score.date = Date.today
     @score.save
-    redirect_to "http://www.playmousecat.com"
+    redirect_to "https://runawayskyzer.herokuapp.com"
   end
 
   private

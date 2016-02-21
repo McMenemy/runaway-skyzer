@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20160114221634) do
   create_table "scores", force: :cascade do |t|
     t.string   "username",                          null: false
     t.integer  "score",                             null: false
-    t.date     "date",       default: '2016-01-14', null: false
+    t.date     "date",       default: '2016-02-21', null: false
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
   end

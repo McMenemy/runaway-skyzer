@@ -22,21 +22,21 @@ var mouseImage1 = new Image();
 mouseImage1.onload = function () {
 	mouseReady1 = true;
 };
-mouseImage1.src = "mouse1.png";
+mouseImage1.src = "skyeDog.png";
 
 var mouseReady2 = false;
 var mouseImage2 = new Image();
 mouseImage2.onload = function () {
 	mouseReady2 = true;
 };
-mouseImage2.src = "mouse2.png";
+mouseImage2.src = "skyeDog.png";
 
 var mouseReady3 = false;
 var mouseImage3 = new Image();
 mouseImage3.onload = function () {
 	mouseReady3 = true;
 };
-mouseImage3.src = "mouse3.png";
+mouseImage3.src = "skyeDog.png";
 
 //which image to show
 var mouseImage = function(){
@@ -61,68 +61,68 @@ var mouseImage = function(){
 
 
 // Cat images
-var catLeft1Ready = false;
-var catLeft1 = new Image();
-catLeft1.onload = function () {
-	catLeft1Ready = true;
+var totoroReady = false;
+var totoro = new Image();
+totoro.onload = function () {
+	totoroReady = true;
 };
-catLeft1.src = "catLeft1.png";
+totoro.src = "totoro.png";
 
-var catLeft2Ready = false;
-var catLeft2 = new Image();
-catLeft2.onload = function () {
-	catLeft2Ready = true;
+var totoroReady = false;
+var totoro = new Image();
+totoro.onload = function () {
+	totoroReady = true;
 };
-catLeft2.src = "catLeft2.png";
+totoro.src = "totoro.png";
 
-var catRight1Ready = false;
-var catRight1 = new Image();
-catRight1.onload = function () {
-	catRight1Ready = true;
+var totoroReady = false;
+var totoro = new Image();
+totoro.onload = function () {
+	totoroReady = true;
 };
-catRight1.src = "catRight1.png";
+totoro.src = "totoro.png";
 
-var catRight2Ready = false;
-var catRight2 = new Image();
-catRight2.onload = function () {
-	catRight2Ready = true;
+var totoroReady = false;
+var totoro = new Image();
+totoro.onload = function () {
+	totoroReady = true;
 };
-catRight2.src = "catRight2.png";
+totoro.src = "totoro.png";
 
 // Which cat to show
 var catImage = function(cat){
   var image;
   if (cat.xSpeed <= 0){ //Cat moving to the left
     if ( (cat.x + cat.y) % 100 < 50 ) {
-      image = catLeft1;
+      image = totoro;
     } else {
-      image = catLeft2;
+      image = totoro;
     }
   } else { //Cat moving to the right
     if ( (cat.x + cat.y) % 100 < 50 ) {
-      image = catRight1;
+      image = totoro;
     } else {
-      image = catRight2;
+      image = totoro;
     }
   }
   return image;
-}
-
-// Cheese1 image
-var cheese1Ready = false;
-var cheese1Image = new Image();
-cheese1Image.onload = function () {
-	cheese1Ready = true;
 };
-cheese1Image.src = "cheese1.png";
 
-// Cheese2 image
-var cheese2Ready = false;
-var cheese2Image = new Image();
-cheese2Image.onload = function () {
-	cheese2Ready = true;
+// appleRed image
+var appleRedReady = false;
+var appleRedImage = new Image();
+appleRedImage.onload = function () {
+	appleRedReady = true;
 };
-cheese2Image.src = "cheese2.png";
+appleRedImage.src = "appleRed.png";
+
+// appleGreen image
+var appleGreenReady = false;
+var appleGreenImage = new Image();
+appleGreenImage.onload = function () {
+	appleGreenReady = true;
+};
+appleGreenImage.src = "appleGreen.png";
 
 
 // Game Objects
@@ -134,17 +134,17 @@ var mouse = {
 
 var cats = [];
 
-var cheese1 = {
+var appleRed = {
   eaten: false,
   x: 0,
   y: 0,
 };
 
-var cheese2 = {
+var appleGreen = {
   eaten: false,
   x: 0,
   y: 0
-}
+};
 
 var cheeseEaten = 0;
 
@@ -190,13 +190,13 @@ var reset = function () {
   }
 
   //Throw new cheeses on the screen randomly
-  cheese1.x = 32 + (Math.random() * (canvas.width - 96));
-  cheese1.y = 32 + (Math.random() * (canvas.height - 96));
-  cheese1.eaten = false;
+  appleRed.x = 32 + (Math.random() * (canvas.width - 96));
+  appleRed.y = 32 + (Math.random() * (canvas.height - 96));
+  appleRed.eaten = false;
 
-  cheese2.x = 32 + (Math.random() * (canvas.width - 96));
-  cheese2.y = 32 + (Math.random() * (canvas.height - 96));
-  cheese2.eaten = false;
+  appleGreen.x = 32 + (Math.random() * (canvas.width - 96));
+  appleGreen.y = 32 + (Math.random() * (canvas.height - 96));
+  appleGreen.eaten = false;
 };
 
 // Update game objects
@@ -257,30 +257,30 @@ var update = function (modifier) {
 
   // Eat Cheeses?
   if (
-    mouse.x <= (cheese1.x + 32)
-    && cheese1.x <= (mouse.x + 32)
-    && mouse.y <= (cheese1.y + 32)
-    && cheese1.y <= (mouse.y + 32)
+    mouse.x <= (appleRed.x + 32)
+    && appleRed.x <= (mouse.x + 32)
+    && mouse.y <= (appleRed.y + 32)
+    && appleRed.y <= (mouse.y + 32)
   ) {
-    cheese1.eaten = true;
-    cheese1.x = -32;
-    cheese1.y = -32;
+    appleRed.eaten = true;
+    appleRed.x = -32;
+    appleRed.y = -32;
     ++cheeseEaten;
   }
 
   if (
-    mouse.x <= (cheese2.x + 32)
-    && cheese2.x <= (mouse.x + 32)
-    && mouse.y <= (cheese2.y + 32)
-    && cheese2.y <= (mouse.y + 32)
+    mouse.x <= (appleGreen.x + 32)
+    && appleGreen.x <= (mouse.x + 32)
+    && mouse.y <= (appleGreen.y + 32)
+    && appleGreen.y <= (mouse.y + 32)
   ) {
-    cheese2.eaten = true;
-    cheese2.x = -32;
-    cheese2.y = -32;
+    appleGreen.eaten = true;
+    appleGreen.x = -32;
+    appleGreen.y = -32;
     ++cheeseEaten;
   }
 
-  if (cheese1.eaten && cheese2.eaten) {
+  if (appleRed.eaten && appleGreen.eaten) {
     reset();
   }
 
@@ -309,7 +309,7 @@ var update = function (modifier) {
 
   }
 
-}
+};
 
 
 // Draw everything
@@ -326,7 +326,7 @@ var render = function() {
   ctx.textAlign = "left";
   ctx.textBaseline = "top";
   // Add Kerning
-  var ctext = ("Cheese Eaten: " + cheeseEaten).split("").join(String.fromCharCode(8202));
+  var ctext = ("Apples Eaten: " + cheeseEaten).split("").join(String.fromCharCode(8202));
   ctx.fillText(ctext, 32, 32);
 
   //Objects
@@ -334,18 +334,18 @@ var render = function() {
      ctx.drawImage(mouseImage(), mouse.x, mouse.y);
    }
 
-   if (catLeft1Ready && catLeft2Ready && catRight1Ready && catRight2Ready) {
+   if (totoroReady && totoroReady && totoroReady && totoroReady) {
      cats.forEach(function(cat){
        ctx.drawImage(catImage(cat), cat.x, cat.y);
      });
    }
 
-   if (cheese1Ready) {
-     ctx.drawImage(cheese1Image, cheese1.x, cheese1.y);
+   if (appleRedReady) {
+     ctx.drawImage(appleRedImage, appleRed.x, appleRed.y);
    }
 
-   if (cheese2Ready) {
-     ctx.drawImage(cheese2Image, cheese2.x, cheese2.y);
+   if (appleGreenReady) {
+     ctx.drawImage(appleGreenImage, appleGreen.x, appleGreen.y);
    }
 
 };
